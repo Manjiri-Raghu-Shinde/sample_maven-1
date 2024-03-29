@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    tools{
+        maven 'MAVEN'
+    }
+
+    stages {
+        stage('Hello1') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Manjiri-Raghu-Shinde/sample_maven-1.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                bat "mvn clean install"
+            }
+        }
+        stage('test') {
+            steps {
+                bat "mvn test"
+            }
+        }
+    }
+}
