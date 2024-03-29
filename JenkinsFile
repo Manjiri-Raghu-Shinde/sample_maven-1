@@ -15,7 +15,7 @@ pipeline {
             steps {
                 // Build the Maven project
                 echo "building project"
-                bat 'mvn clean package'
+                bat 'mvn clean install package'
             }
         }
         stage('Test') {
@@ -29,16 +29,6 @@ pipeline {
             steps {
                 echo "deploying the project"
             }
-        }
-    }
-    
-    post {
-        always {
-            // Archive the built artifacts
-            archiveArtifacts 'target/*.jar'
-            
-            // Publish JUnit test results
-            junit 'target/surefire-reports/*.xml'
         }
     }
 }
