@@ -14,19 +14,20 @@ pipeline {
         stage('Build') {
             steps {
                 // Build the Maven project
+                echo "building project"
                 bat 'mvn clean package'
             }
         }
         stage('Test') {
             steps {
                 // Run Selenium tests
+                echo "running test cases"
                 bat 'mvn test'
             }
         }
         stage('Deploy') {
             steps {
-                // Deploy the application (e.g., to a web server)
-                // You may need to add additional steps here depending on your deployment strategy
+                echo "deploying the project"
             }
         }
     }
