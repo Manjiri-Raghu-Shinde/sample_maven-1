@@ -1,25 +1,43 @@
 pipeline {
     agent any
-
     tools{
         maven 'MAVEN'
     }
 
     stages {
-        stage('Hello1') {
+        stage('Checkout') {
             steps {
+                // Checkout the code from Git repository
                 git branch: 'main', url: 'https://github.com/Manjiri-Raghu-Shinde/sample_maven-1.git'
             }
         }
         stage('Build') {
             steps {
-                bat "mvn clean install"
+                // Build the Maven project
+                bat 'mvn clean package'
             }
         }
-        stage('test') {
+        stage('Test') {
             steps {
-                bat "mvn test"
+                // Run Selenium tests
+                bat 'mvn test'
             }
+        }
+        stage('Deploy') {
+            steps {
+                // Deploy the application (e.g., to a web server)
+                // You may need to add additional steps here depending on your deployment strategy
+            }
+        }
+    }
+    
+    post {
+        always {
+            // Archive the built artifacts
+            archiveArtifacts 'target/*.jar'
+            
+            // Publish JUnit test results
+            junit 'target/surefire-reports/*.xml'
         }
     }
 }
